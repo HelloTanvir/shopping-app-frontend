@@ -80,7 +80,7 @@ const Checkout = () => {
         };
 
         try {
-            const res = await axios.post('/order', data);
+            const res = await axios.post('/orders', data);
 
             if (res) {
                 form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
