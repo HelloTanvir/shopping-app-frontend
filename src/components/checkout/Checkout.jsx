@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { Fab } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { AutoComplete, Button, Drawer, Form, Input, message, Select } from 'antd';
@@ -136,7 +135,6 @@ const Checkout = () => {
                 }
             >
                 <Form
-                    // eslint-disable-next-line react/jsx-props-no-spreading
                     {...formItemLayout}
                     form={form}
                     name="checkout"

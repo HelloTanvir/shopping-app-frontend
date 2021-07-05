@@ -21,11 +21,6 @@ const App = () => {
                     <Banner />
                     <Product />
                 </Route>
-
-                {/* <Route path="/" exact>
-                    <Banner />
-                    <Product />
-                </Route> */}
             </Switch>
         </BrowserRouter>
     );

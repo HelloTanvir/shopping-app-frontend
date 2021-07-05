@@ -56,7 +56,6 @@ const Product = () => {
 
             {allProducts.length > 0 ? (
                 allProducts.map((product, index) => (
-                    // eslint-disable-next-line no-underscore-dangle
                     <div key={product._id} data-aos="fade-up" className={Classes.card}>
                         <div className={Classes.imgBx}>
                             <img src={product.image} alt="" />

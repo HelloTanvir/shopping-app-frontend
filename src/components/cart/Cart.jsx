@@ -1,8 +1,6 @@
-/* eslint-disable no-underscore-dangle */
 import {
     CancelPresentationRounded,
     ExposureNeg1Rounded,
-    // eslint-disable-next-line prettier/prettier
     ExposurePlus1Rounded
 } from '@material-ui/icons';
 import React, { useContext, useEffect } from 'react';

@@ -58,7 +58,6 @@ const MenuDrawer = () => {
                 {categories.map((category, index) =>
                     category.subCategories.length > 0 ? (
                         <Button
-                            // eslint-disable-next-line no-underscore-dangle
                             key={category._id}
                             type="text"
                             block
@@ -69,7 +68,6 @@ const MenuDrawer = () => {
                         </Button>
                     ) : (
                         <Link
-                            // eslint-disable-next-line no-underscore-dangle
                             key={category._id}
                             to={`/${category.title}`}
                             onClick={showCategorizedProducts}
