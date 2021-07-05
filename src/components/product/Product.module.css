@@ -1,0 +1,119 @@
+button:disabled {
+  color: #fff !important;
+}
+
+.productsContainer {
+  margin-top: 150px;
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 270px);
+  grid-template-rows: max-content;
+  /* grid-auto-rows: minmax(420px, max-content); */
+  justify-content: center;
+  grid-gap: 80px;
+}
+
+.sectionTitle {
+  grid-column: 1/-1;
+  font-size: 45px;
+  letter-spacing: 2px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid;
+  width: max-content;
+  place-self: center;
+  margin-bottom: 50px;
+}
+
+.card {
+  position: relative;
+  min-height: 420px;
+  background: #122936;
+  color: #fff;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -1px;
+  right: -1px;
+  height: 100%;
+  background: #fff;
+  transform: skewY(345deg);
+  transition: 0.5s;
+}
+
+.card:hover::before {
+  top: -70%;
+  transform: skewY(390deg);
+}
+
+/* shadaow atharo tag in the bottom the card */
+.card::after {
+  content: "Atharo";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  font-size: 5em;
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.imgBx {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: 0.5s;
+}
+
+.imgBx > img {
+  max-width: 100%;
+  max-height: 300px;
+  transition: 0.5s;
+}
+
+.card:hover .imgBx > img {
+  max-width: 50%;
+}
+
+.contentBx {
+  position: relative;
+  padding: 20px 10px 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+  transition: 0.5s;
+}
+
+.card:hover .contentBx {
+  flex: 1;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.price {
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.card:hover .buy {
+  top: 0 !important;
+  opacity: 1 !important;
+}

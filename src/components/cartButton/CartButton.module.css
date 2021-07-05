@@ -1,0 +1,26 @@
+.cartBtn {
+  width: 200px;
+  min-height: 40px;
+  background-color: #444;
+  position: fixed;
+  z-index: 2;
+  right: 0;
+  top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0 0 5px 5px;
+  border-top: 1px solid #fff;
+  /* transform: scaleY(0); */
+  transition: 0.3s;
+}
+
+.cartTotal {
+  background-color: #fff;
+  color: #222;
+  font-weight: 500;
+  padding: 3px 15px;
+  border-radius: 20px;
+}

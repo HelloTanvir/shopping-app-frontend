@@ -1,0 +1,66 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 7;
+  height: 70px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  transition: 0.3s;
+  /* background-color: #222; */
+  /* background-color: transparent; */
+}
+
+.headerColored {
+  background-color: #222;
+}
+
+.logoContainer {
+  align-self: center;
+  margin: 0 100px 0 20px;
+}
+
+.logo {
+  width: 60px;
+  cursor: pointer;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+}
+
+.searchBoxScrolled *::before {
+  border-color: #fff !important;
+}
+
+.searchBoxScrolled input,
+.searchBoxScrolled label {
+  color: #fff !important;
+}
+
+.socialIcons {
+  width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 100px;
+}
+
+.socialIcons > *:hover {
+  transform: scale(1.25);
+  transition: transform 0.3s ease;
+}
+
+@media only screen and (max-width: 992px) {
+  .logo {
+    width: 50px;
+  }
+
+  .socialIcons {
+    width: 100px;
+    margin-left: 50px;
+  }
+}
