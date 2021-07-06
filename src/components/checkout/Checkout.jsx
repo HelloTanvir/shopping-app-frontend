@@ -1,7 +1,7 @@
 import { Fab } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { AutoComplete, Button, Drawer, Form, Input, message, Select } from 'antd';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ProductContext } from '../../contexts/ProductContext';
 import axios from '../../utils/axios';
 
@@ -31,13 +31,6 @@ const Checkout = () => {
 
     const [open, setOpen] = useState(false);
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-    const [errors, setErrors] = useState({
-        name: { msg: '' },
-        email: { msg: '' },
-        mobile: { msg: '' },
-        paymentMethod: { msg: '' },
-        address: { msg: '' },
-    });
 
     const { allProducts, setIsLoading } = useContext(ProductContext);
 
@@ -59,7 +52,31 @@ const Checkout = () => {
     const handleSubmit = async () => {
         const { name, email, mobile, paymentMethod, address } = form.getFieldsValue(true);
 
-        if (!name || !email || !mobile || !paymentMethod || !address) return;
+        if (!name || !email || !mobile || !paymentMethod || !address) {
+            form.setFields([
+                {
+                    name: 'name',
+                    errors: !name && ['Please input your name'],
+                },
+                {
+                    name: 'email',
+                    errors: !email && ['Please input your email'],
+                },
+                {
+                    name: 'mobile',
+                    errors: !mobile && ['Please input your mobile number'],
+                },
+                {
+                    name: 'paymentMethod',
+                    errors: !paymentMethod && ['Please select a payment method'],
+                },
+                {
+                    name: 'address',
+                    errors: !address && ['Please input your address'],
+                },
+            ]);
+            return;
+        }
 
         setIsLoading(true);
 
@@ -83,21 +100,54 @@ const Checkout = () => {
             const res = await axios.post('/orders', data);
 
             if (res) {
-                form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
-                setOpen(false);
                 setIsLoading(false);
+                setOpen(false);
                 message.success('Order recorded successfully');
+                form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
             }
         } catch (err) {
-            form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
+            // form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
             setIsLoading(false);
 
-            setErrors((prev) => ({
-                ...prev,
-                ...err.response.data.errors,
-            }));
+            form.setFields([
+                {
+                    name: 'name',
+                    errors: err.response.data?.errors?.name?.msg && [
+                        err.response.data?.errors?.name?.msg,
+                    ],
+                },
+                {
+                    name: 'email',
+                    errors: err.response.data?.errors?.email?.msg && [
+                        err.response.data?.errors?.email?.msg,
+                    ],
+                },
+                {
+                    name: 'mobile',
+                    errors: err.response.data?.errors?.mobile?.msg && [
+                        err.response.data?.errors?.mobile?.msg,
+                    ],
+                },
+                {
+                    name: 'paymentMethod',
+                    errors: err.response.data?.errors?.paymentMethod?.msg && [
+                        err.response.data?.errors?.paymentMethod?.msg,
+                    ],
+                },
+                {
+                    name: 'address',
+                    errors: err.response.data?.errors?.address?.msg && [
+                        err.response.data?.errors?.address?.msg,
+                    ],
+                },
+            ]);
         }
     };
+
+    useEffect(
+        () => form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']),
+        [form, open]
+    );
 
     return (
         <>
@@ -148,16 +198,7 @@ const Checkout = () => {
                             {
                                 required: true,
                                 whitespace: true,
-                                message: 'Please input your Name!',
-                            },
-                            {
-                                validator: (_, value) => {
-                                    if (!value || !errors.name.msg) {
-                                        return Promise.resolve();
-                                    }
-
-                                    return Promise.reject(new Error(errors.name.msg));
-                                },
+                                message: 'Please input your name',
                             },
                         ]}
                     >
@@ -166,31 +207,22 @@ const Checkout = () => {
 
                     <Form.Item
                         name="email"
-                        label="E-mail"
+                        label="email"
                         rules={[
                             {
                                 type: 'email',
-                                message: 'The input is not valid E-mail!',
+                                message: 'The input is not valid email',
                             },
                             {
                                 required: true,
-                                message: 'Please input your E-mail!',
-                            },
-                            {
-                                validator: (_, value) => {
-                                    if (!value || !errors.email.msg) {
-                                        return Promise.resolve();
-                                    }
-
-                                    return Promise.reject(new Error(errors.email.msg));
-                                },
+                                message: 'Please input your email',
                             },
                         ]}
                     >
                         <AutoComplete
                             options={emailOptions}
                             onChange={onEmailChange}
-                            placeholder="Please input your E-mail"
+                            placeholder="Please input your email"
                         >
                             <Input />
                         </AutoComplete>
@@ -202,16 +234,7 @@ const Checkout = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please input your mobile number!',
-                            },
-                            {
-                                validator: (_, value) => {
-                                    if (!value || !errors.mobile.msg) {
-                                        return Promise.resolve();
-                                    }
-
-                                    return Promise.reject(new Error(errors.mobile.msg));
-                                },
+                                message: 'Please input your mobile number',
                             },
                         ]}
                     >
@@ -230,16 +253,7 @@ const Checkout = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please select a payment method!',
-                            },
-                            {
-                                validator: (_, value) => {
-                                    if (!value || !errors.paymentMethod.msg) {
-                                        return Promise.resolve();
-                                    }
-
-                                    return Promise.reject(new Error(errors.paymentMethod.msg));
-                                },
+                                message: 'Please select a payment method',
                             },
                         ]}
                     >
@@ -257,15 +271,6 @@ const Checkout = () => {
                             {
                                 required: true,
                                 message: 'Please input your address',
-                            },
-                            {
-                                validator: (_, value) => {
-                                    if (!value || !errors.address.msg) {
-                                        return Promise.resolve();
-                                    }
-
-                                    return Promise.reject(new Error(errors.address.msg));
-                                },
                             },
                         ]}
                     >
