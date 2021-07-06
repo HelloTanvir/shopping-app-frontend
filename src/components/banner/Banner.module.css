@@ -41,14 +41,32 @@
   visibility: hidden;
 }
 
+@media only screen and (max-width: 1012px) {
+  .textContainer {
+    font-size: 50px;
+  }
+}
+
 @media only screen and (max-width: 992px) {
   .textContainer {
     font-size: 40px;
   }
 }
 
-@media only screen and (max-width: 1012px) {
+@media only screen and (max-width: 820px) {
   .textContainer {
-    font-size: 50px;
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 460px) {
+  .textContainer {
+    font-size: 22px;
+  }
+}
+
+@media only screen and (max-width: 325px) {
+  .textContainer {
+    font-size: 18px;
   }
 }

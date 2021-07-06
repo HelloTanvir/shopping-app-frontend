@@ -1,0 +1,29 @@
+.socialIcons {
+  width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 100px;
+}
+
+.socialIcons > *:hover {
+  transform: scale(1.25);
+  transition: transform 0.3s ease;
+}
+
+.socialIconsInDrawer {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 20% 3px 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1.5px solid #d5d5d5;
+}
+
+@media only screen and (max-width: 992px) {
+  .socialIcons {
+    width: 100px;
+    margin-left: 50px;
+  }
+}

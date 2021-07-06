@@ -1,8 +1,11 @@
 import { AlignLeftOutlined } from '@ant-design/icons';
 import { Button, Drawer } from 'antd';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { DeviceContext } from '../../contexts/DeviceContext';
 import axios from '../../utils/axios';
+import SocialIcons from '../socialIcons/SocialIcons';
+import TodaysOffer from '../todayOffer/TodaysOffer';
 
 const MenuDrawer = () => {
     const [mainDrawerShow, setMainDrawerShow] = useState(false);
@@ -10,6 +13,8 @@ const MenuDrawer = () => {
 
     const [categories, setCategories] = useState([]);
     const [categoryIndex, setCategoryIndex] = useState(0);
+
+    const { device } = useContext(DeviceContext);
 
     useEffect(() => {
         const getCategories = async () => {
@@ -49,11 +54,26 @@ const MenuDrawer = () => {
             <Drawer
                 title="Category"
                 placement="left"
-                width={320}
+                width={300}
                 closable
                 onClose={() => setMainDrawerShow(false)}
                 visible={mainDrawerShow}
                 drawerStyle={{ backgroundColor: '#222' }}
+                footer={
+                    device === 'mobile' || device === 'sm-mobile' ? (
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <TodaysOffer />
+                            {device === 'sm-mobile' ? <SocialIcons inDrawer /> : null}
+                        </div>
+                    ) : null
+                }
             >
                 {categories.map((category, index) =>
                     category.subCategories.length > 0 ? (
@@ -82,7 +102,7 @@ const MenuDrawer = () => {
                 <Drawer
                     title={categories[categoryIndex]?.title}
                     placement="left"
-                    width={320}
+                    width={300}
                     closable
                     onClose={() => setChildrenDrawerShow(false)}
                     visible={childrenDrawerShow}

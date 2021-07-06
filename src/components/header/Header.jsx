@@ -1,26 +1,38 @@
-import { Button, Fab, makeStyles, TextField } from '@material-ui/core';
-import { Facebook, Instagram, Navigation, Twitter } from '@material-ui/icons';
-import React, { useState } from 'react';
+import { Button, IconButton, InputBase, makeStyles, TextField } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
+import { DeviceContext } from '../../contexts/DeviceContext';
 import CartButton from '../cartButton/CartButton';
 import MenuDrawer from '../menuDrawer/MenuDrawer';
+import SocialIcons from '../socialIcons/SocialIcons';
+import TodaysOffer from '../todayOffer/TodaysOffer';
 import Classes from './Header.module.css';
 
-const useStyle = makeStyles({
-    iconCommon: {
-        cursor: 'pointer',
-        fontSize: 25,
+const useStyles = makeStyles((theme) => ({
+    input: {
+        marginLeft: theme.spacing(1),
+        flex: 1,
+        color: '#fff',
+        fontSize: 17,
+        '&::placeholder': {
+            opacity: 0.85,
+            fontSize: 17,
+        },
     },
-    fab: {
-        alignSelf: 'center',
-        marginLeft: 100,
+    iconButton: {
+        padding: 10,
+        color: '#fff',
     },
-});
+}));
 
 const Header = ({ inCartPage }) => {
-    const classes = useStyle();
+    const classes = useStyles();
+
     const history = useHistory();
+
+    const { device } = useContext(DeviceContext);
 
     const [scrolling, setScrolling] = useState(false);
 
@@ -29,11 +41,6 @@ const Header = ({ inCartPage }) => {
     document.addEventListener('scroll', () => {
         setScrolling(window.scrollY > window.innerHeight - 50);
     });
-
-    const offerClickHandler = (event) => {
-        event.stopPropagation();
-        console.log('No offer now');
-    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -60,48 +67,63 @@ const Header = ({ inCartPage }) => {
                     <img src={logo} alt="atharo" className={Classes.logo} />
                 </Link>
 
-                {/* <div className={[Classes.searchBox, scrolling && Classes.searchBoxScrolled].join(' ')}> */}
-                <div className={[Classes.searchBox, Classes.searchBoxScrolled].join(' ')}>
+                <div
+                    className={[
+                        Classes.searchBox,
+                        device === 'sm-mobile' && Classes.searchTextSmall,
+                    ].join(' ')}
+                >
                     <form
                         style={{ flex: 1, display: 'flex', alignItems: 'center' }}
                         onSubmit={handleSearch}
                     >
-                        <TextField
-                            id="standard-basic"
-                            label="Search your products"
-                            autoComplete="off"
-                            style={{ flex: 1, marginRight: 10 }}
-                            value={searchText}
-                            onChange={(e) => setSearchText(e.target.value)}
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSearch}
-                        >
-                            Search
-                        </Button>
+                        {device === 'sm-mobile' ? (
+                            <>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="search products..."
+                                    inputProps={{
+                                        'aria-label': 'search products',
+                                        className: classes.input,
+                                    }}
+                                    value={searchText}
+                                    onChange={(e) => setSearchText(e.target.value)}
+                                />
+                                <IconButton
+                                    type="submit"
+                                    className={classes.iconButton}
+                                    aria-label="search"
+                                    onClick={handleSearch}
+                                >
+                                    <SearchIcon />
+                                </IconButton>
+                            </>
+                        ) : (
+                            <>
+                                <TextField
+                                    id="standard-basic"
+                                    label="search products..."
+                                    autoComplete="off"
+                                    style={{ flex: 1, marginRight: 10 }}
+                                    value={searchText}
+                                    onChange={(e) => setSearchText(e.target.value)}
+                                />
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleSearch}
+                                >
+                                    Search
+                                </Button>
+                            </>
+                        )}
                     </form>
                 </div>
 
-                <Fab
-                    variant="extended"
-                    size="small"
-                    color="default"
-                    aria-label="add"
-                    className={classes.fab}
-                    onClick={offerClickHandler}
-                >
-                    <Navigation />
-                    today&#39;s offer
-                </Fab>
+                {device === 'mobile' || device === 'sm-mobile' ? null : <TodaysOffer />}
 
-                <div className={Classes.socialIcons}>
-                    <Facebook className={classes.iconCommon} style={{ color: '#4267B2' }} />
-                    <Twitter className={classes.iconCommon} style={{ color: '#55acee' }} />
-                    <Instagram className={classes.iconCommon} style={{ color: '#b42e85' }} />
-                </div>
+                {device === 'sm-mobile' ? null : <SocialIcons />}
             </div>
             <CartButton />
         </>

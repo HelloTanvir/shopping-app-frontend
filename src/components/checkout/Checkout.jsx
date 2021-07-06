@@ -2,6 +2,7 @@ import { Fab } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { AutoComplete, Button, Drawer, Form, Input, message, Select } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
+import { DeviceContext } from '../../contexts/DeviceContext';
 import { ProductContext } from '../../contexts/ProductContext';
 import axios from '../../utils/axios';
 
@@ -33,6 +34,7 @@ const Checkout = () => {
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
     const { allProducts, setIsLoading } = useContext(ProductContext);
+    const { device } = useContext(DeviceContext);
 
     const onEmailChange = (value) => {
         if (!value) {
@@ -106,7 +108,6 @@ const Checkout = () => {
                 form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
             }
         } catch (err) {
-            // form.resetFields(['name', 'email', 'mobile', 'paymentMethod', 'address']);
             setIsLoading(false);
 
             form.setFields([
@@ -165,7 +166,7 @@ const Checkout = () => {
 
             <Drawer
                 title="Checkout"
-                width={520}
+                width={device === 'sm-mobile' ? 300 : 500}
                 onClose={() => setOpen(false)}
                 visible={open}
                 bodyStyle={{ paddingBottom: 80 }}

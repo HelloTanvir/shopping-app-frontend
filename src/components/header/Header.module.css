@@ -32,26 +32,19 @@
   align-items: center;
 }
 
-.searchBoxScrolled *::before {
+.searchBox *::before {
   border-color: #fff !important;
 }
 
-.searchBoxScrolled input,
-.searchBoxScrolled label {
+.searchBox input,
+.searchBox label {
   color: #fff !important;
 }
 
-.socialIcons {
-  width: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 100px;
-}
-
-.socialIcons > *:hover {
-  transform: scale(1.25);
-  transition: transform 0.3s ease;
+.searchTextSmall input,
+.searchTextSmall label {
+  font-size: 17px !important;
+  color: #fff !important;
 }
 
 @media only screen and (max-width: 992px) {
@@ -59,8 +52,7 @@
     width: 50px;
   }
 
-  .socialIcons {
-    width: 100px;
-    margin-left: 50px;
+  .logoContainer {
+    margin-right: 30px;
   }
 }
