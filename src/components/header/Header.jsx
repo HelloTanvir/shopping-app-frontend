@@ -35,7 +35,9 @@ const Header = ({ inCartPage }) => {
         console.log('No offer now');
     };
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
+        e.preventDefault();
+
         history.push(`/${searchText}`);
         setTimeout(() => {
             document
@@ -60,17 +62,27 @@ const Header = ({ inCartPage }) => {
 
                 {/* <div className={[Classes.searchBox, scrolling && Classes.searchBoxScrolled].join(' ')}> */}
                 <div className={[Classes.searchBox, Classes.searchBoxScrolled].join(' ')}>
-                    <TextField
-                        id="standard-basic"
-                        label="Search your products"
-                        autoComplete="off"
-                        style={{ flex: 1, marginRight: 10 }}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
-                    <Button variant="contained" color="primary" onClick={handleSearch}>
-                        Search
-                    </Button>
+                    <form
+                        style={{ flex: 1, display: 'flex', alignItems: 'center' }}
+                        onSubmit={handleSearch}
+                    >
+                        <TextField
+                            id="standard-basic"
+                            label="Search your products"
+                            autoComplete="off"
+                            style={{ flex: 1, marginRight: 10 }}
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSearch}
+                        >
+                            Search
+                        </Button>
+                    </form>
                 </div>
 
                 <Fab
