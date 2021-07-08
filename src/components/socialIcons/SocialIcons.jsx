@@ -14,7 +14,11 @@ const SocialIcons = ({ inDrawer }) => {
     const classes = useStyle();
     return (
         <div className={inDrawer ? Classes.socialIconsInDrawer : Classes.socialIcons}>
-            <Facebook className={classes.iconCommon} style={{ color: '#4267B2' }} />
+            <Facebook
+                className={classes.iconCommon}
+                style={{ color: '#4267B2' }}
+                onClick={() => window.location.replace('https://www.facebook.com/tanvir.stmz/')}
+            />
             <Twitter className={classes.iconCommon} style={{ color: '#55acee' }} />
             <Instagram className={classes.iconCommon} style={{ color: '#b42e85' }} />
         </div>

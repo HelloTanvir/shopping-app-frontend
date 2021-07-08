@@ -15,7 +15,7 @@ const Banner = () => {
             <div className={Classes.bannerContainer}>
                 <div className={[Classes.textContainer, hideTxt && Classes.hideText].join(' ')}>
                     <Typist avgTypingDelay={100} cursor={{ blink: true }}>
-                        Atharo is your shopping store !!!
+                        কেনাকাটা এখন অনলাইনে !!!
                     </Typist>
                 </div>
             </div>
