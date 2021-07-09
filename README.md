@@ -1,3 +1,8 @@
+# The site is live at netlify
+
+Live [athShopApp](https://athshopapp.netlify.app).
+The app has backend on heroku, file upload is done with multer and stored in cloudinary.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
